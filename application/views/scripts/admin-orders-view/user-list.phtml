@@ -1,0 +1,29 @@
+<article class="order">
+    <h1>Orders for <?php echo date('j M Y',  strtotime($this->orderDate));?></h1>
+    <div id="accordion">
+        <?php
+        if($this->userList)
+        {
+            foreach ($this->userList as $value)
+            {
+                echo '<h3 onclick="userOrderDetail(\''.$value['orderid'].'\');return false;">Order #'.$value['orderid'].' - '.ucfirst($value['username']).'</h3>
+                        <div id="user-order-detail-'.$value['orderid'].'" class="none" style="min-height:250px;">
+                            
+                        </div>';
+            }
+        }
+        ?>
+    </div>
+</article>
+<article class="snapshot">
+    <h2>SnapShot</h2>
+    <ul>
+        <li>Total Orders for <?php echo date('j M Y',  strtotime($this->orderDate));?> is Rs <?php echo number_format($this->totalOrder);?></li>
+        <li>Largest Order placed by <?php echo ucfirst($this->highestOrder['username']);?> for Rs.<?php echo number_format($this->highestOrder['total_Price']);?></li>
+    </ul>
+</article>
+<script>
+    $(function() {
+        $( "#accordion" ).accordion();
+    });
+</script>

@@ -1,0 +1,51 @@
+<div class="wrapper">
+    <section>
+    	<header>
+          <h1>Fruit Bazars</h1>
+        </header>
+        <article>
+            <div class="left">Select Date</div>
+            <div class="left"><?php echo $this->userlist()->distinctDateForAdmin();?></div>
+        </article>
+        <div id="user-list-div-id"></div>
+    </section>
+</div>
+<script type="text/javascript">
+$(document).ready(function (){
+    $('#date-list').change(function (){
+        if($('#date-list').val())
+        {
+            $.ajax({
+                type: 'POST',
+                url: '/assign2/public/admin-orders-view/user-list',
+                data: "orderdate="+$('#date-list').val(),
+                cache:false,
+                success: function(data)
+                {
+                    $('#user-list-div-id').html('');
+                    $('#user-list-div-id').html(data);
+                }
+            });
+        }
+        else
+        {
+            $('#user-list-div-id').html('');
+        }
+    });
+});
+
+function userOrderDetail(orderId)
+{
+    $.ajax({
+            type: 'POST',
+            url: '/assign2/public/admin-orders-view/order-detail',
+            data: "orderid="+orderId,
+            cache:false,
+            success: function(data)
+            {
+                $('#user-order-detail-'+orderId).removeClass('none');
+                $('#user-order-detail-'+orderId).html(data);
+            }
+        });
+}
+</script>

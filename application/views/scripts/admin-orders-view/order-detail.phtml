@@ -1,0 +1,12 @@
+<div style="float:left;width:100%;">
+<table cellpadding="5px" cellspacing="1px" border="0">
+    <tbody>
+        <?php
+            foreach ($this->orderList as $value)
+            {
+                echo '<tr><td>'.$value['product_name'].'</td><td>'.$value['product_price'].'</td></tr>';
+            }
+        ?>
+    </tbody>
+</table>
+</div>

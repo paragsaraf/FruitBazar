@@ -1,0 +1,21 @@
+<table cellpadding="5px" cellspacing="1px" border="0">
+    <thead><tr><th colspan="2">Order Basket</th></tr></thead>
+    <tbody>
+        <?php
+        
+        if($this->productArr)
+        {
+            $cnt = 1;
+            foreach ($this->productArr as $value)
+            {
+                echo '<tr class="to-remove-background-color-cart" id="product-'.$cnt.'-cart-tr-id" onclick="selectCartTr(\''.$cnt.'\',\''.$value['p_id'].'\');return false;">
+                        <td>'.ucfirst($value['product_name']).'</td>
+                        <td>'.ucfirst($value['product_price']).'</td>
+                    </tr>';
+                $cnt++;
+            }
+        }
+        
+        ?>
+    </tbody>
+</table>

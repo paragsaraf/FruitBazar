@@ -1,0 +1,130 @@
+<div class="wrapper">
+    <section>
+    	<header>
+          <h1>Fruite Bazars</h1>
+        </header>
+        <article>
+        	<div>Select Customer</div>
+            <div class="margin-top-10"><?php echo $this->userlist()->userNameList();?></div>
+        </article>
+        <article class="frm">
+        	<div class="left">
+            	<?php echo $this->userlist()->fruitNameList();?>
+            </div>
+            <div class="add-remove">
+            	<div><button name="add" id="add"> Add > </button></div>
+                <div><button name="remove" id="remove"> < Remove </button></div>
+                
+            </div>
+            <div class="left" id="my-chart">
+            	
+            </div>
+            <div class="submit-container"><input type="submit" value="Submit" onclick="saveUserOrder();return false;" /></div>
+        </article>
+    </section>
+    <input type="hidden" id="selected-fruit-id" name="selected-fruit-id">
+    <input type="hidden" id="selected-cart-fruit-id" name="selected-fruit-id">
+</div>
+<script type="text/javascript">
+$(document).ready(function (){
+    $('#add').click(function (){
+        if($('#customer-list').val())
+        {
+            addToCart();
+        }
+        else
+        {
+            alert('Please select Customer');
+        }
+    });
+    $('#customer-list').change(function (){
+        if($('#customer-list').val())
+        {
+            $('#selected-fruit-id').val('');
+            $('.to-remove-background-color td').removeAttr('style');
+            addToCart();
+        }
+    });
+    $('#remove').click(function (){
+        if($('#customer-list').val())
+        {
+            removeFromCart();
+        }
+        else
+        {
+            alert('Please select Customer');
+        }
+    });
+});
+
+function addToCart()
+{
+    if($('#customer-list').val())
+    {
+        $.ajax({
+            type: 'POST',
+            url: '/assign2/public/fruits-order-form/add-to-cart',
+            data: "productid="+$('#selected-fruit-id').val()+"&customerid="+$('#customer-list').val(),
+            cache:false,
+            success: function(data)
+            {
+                $('#my-chart').html(data);
+            }
+        });
+    }
+}
+function removeFromCart()
+{
+    if($('#customer-list').val())
+    {
+        $.ajax({
+            type: 'POST',
+            url: '/assign2/public/fruits-order-form/remove-from-cart',
+            data: "productid="+$('#selected-cart-fruit-id').val()+"&customerid="+$('#customer-list').val(),
+            cache:false,
+            success: function(data)
+            {
+                $('#my-chart').html(data);
+            }
+        });
+    }
+}
+function selectTr(id)
+{
+    $('.to-remove-background-color td').removeAttr('style');
+    $('#product-'+id+'-tr-id td').css('background-color','gray');
+    $('#selected-fruit-id').val(id);
+}
+
+function selectCartTr(id,mainid)
+{
+    $('.to-remove-background-color-cart td').removeAttr('style');
+    $('#product-'+id+'-cart-tr-id td').css('background-color','gray');
+    $('#selected-cart-fruit-id').val(mainid);
+}
+
+function saveUserOrder()
+{
+    if($('#customer-list').val())
+    {
+        $.ajax({
+                type: 'POST',
+                url: '/assign2/public/fruits-order-form/save-user-order',
+                data: "customerid="+$('#selected-fruit-id').val(),
+                cache:false,
+                success: function(data)
+                {
+                    if(data == 'success')
+                    {
+                        alert('Order Submited successfully');
+                        location.reload(); 
+                    }
+                }
+            });
+    }
+    else
+    {
+        alert('Please select Customer');
+    }
+}
+</script>

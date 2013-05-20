@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Fruite Bazars</title>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <link href="<?php echo $this->config['css']['main'] ?>" rel="stylesheet" type="text/css" />
+        <link href="http://jqueryui.com/jquery-wp-content/themes/jqueryui.com/style.css" rel="stylesheet" type="text/css" />
+        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+        <?php
+            echo $this->headLink();
+            echo  $this->headScript();
+        ?>
+        
+    </head>
+    <body>
+        <?php
+            echo $this->layout()->content;
+        ?>
+
+    </body>
+</html>
